@@ -14,4 +14,4 @@ Created by Pixelart 2015
 ## Changelog
 
 **Version 1.1.0** 10. May 2015
- - Initial release
+`- Initial release`
