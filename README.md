@@ -1,4 +1,5 @@
 # Envato Purchase Code Checker
+![alt text][logo]
 
 This is a purchase code checker for the Envato market. You are able to check multiple purchasecodes at once, and save the result to csv, or saveing and opening a file with the purchase codes to check.
 
@@ -25,3 +26,7 @@ Created by Pixelart 2015
 ```
 - Initial release
 ```
+
+
+
+[logo]: https://github.com/PixelartDev/Envato-Purchase-Code-Checker/raw/master/assets/epcc.png "Logo"
