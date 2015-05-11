@@ -1,5 +1,6 @@
 package com.pixelartdev;
 
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,15 +10,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,6 +72,7 @@ public class epc extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Envato Purchase Code Checker");
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("epcc-icon.png")));
         setResizable(false);
 
         codeLabel.setText("Purchase Code");
@@ -287,20 +287,21 @@ public class epc extends javax.swing.JFrame {
                     data[num] = scode+","+buyer+","+item_name+","+licence;                   
                     
                 }catch(JSONException e) {
-                    JOptionPane.showMessageDialog(null, "Error:\n"+e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                  //  JOptionPane.showMessageDialog(null, "Error:\n"+e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
                 }
             }else {
                 String text = resultArea.getText();
                 text += "Invalid Purchase Code!\nPurchase Code: "+scode+"\n----------\n";
                 resultArea.setText(text);
                 
-                data[num] = scode+",invalid code,-,-"; 
+                data[num] = scode+",invalid code,-,-";
                 
             }
         }catch(java.net.UnknownHostException ex) {
             JOptionPane.showMessageDialog(null, "Please check your internet connection");
         }catch(IOException e) {
-            JOptionPane.showMessageDialog(null, "Error:\n"+e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+           // JOptionPane.showMessageDialog(null, "Error:\n"+e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -318,9 +319,12 @@ public class epc extends javax.swing.JFrame {
         String temp = codeField.getText();
         
         JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int retrival = chooser.showSaveDialog(null);
+        chooser.setCurrentDirectory(new File(prefs.get("Path",System.getProperty("user.home").toString()) ));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Envato Purchase Code Checker", "ecc");
+        chooser.setFileFilter(filter);
+        int retrival = chooser.showSaveDialog(this);
         if (retrival == JFileChooser.APPROVE_OPTION) {
+            prefs.put("Path", chooser.getCurrentDirectory().toString());
             try {
                 FileWriter fw;
                 if(chooser.getSelectedFile().toString().endsWith(".ecc")) {
@@ -331,7 +335,7 @@ public class epc extends javax.swing.JFrame {
                 temp = temp.replaceAll(";", ",");
                 temp = temp.replaceAll(" ", ",");
                 String[] codes = temp.split(",");
-                fw.write("Envato Purchase Code Checker v1.1.0\n");
+                fw.write("Envato Purchase Code Checker v1.1.3\n");
                 fw.write(temp);
                 fw.close();
             } catch (IOException ex) {
@@ -342,28 +346,32 @@ public class epc extends javax.swing.JFrame {
     }//GEN-LAST:event_saveItemActionPerformed
 
     private void openItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openItemActionPerformed
+        codeField.setText("");
+        
         JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        chooser.setCurrentDirectory(new File(prefs.get("Path",System.getProperty("user.home").toString()) ));
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        chooser.showOpenDialog(null);
-        int retrival = chooser.showSaveDialog(null);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Envato Purchase Code Checker", "ecc");
+        chooser.setFileFilter(filter);
+        int retrival = chooser.showOpenDialog(this);
         if (retrival == JFileChooser.APPROVE_OPTION) {
+            prefs.put("Path", chooser.getCurrentDirectory().toString());            
             try {
-                BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
-                try {
+                try (BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()))) {
                     StringBuilder sb = new StringBuilder();
                     String line = br.readLine();
-
+                    System.out.println(line);
+                    
                     while (line != null) {
-                        if(!line.contains("Envato Purchase Code Checker")) {
+                        if(line.contains("Envato")) {
+                            line = br.readLine();
+                        }else {
                             sb.append(line);
                             sb.append(System.lineSeparator());
                             line = br.readLine();
                         }
                     }
                     codeField.setText(sb.toString());
-                } finally {
-                    br.close();
                 }
             }catch(IOException e) {
                 
@@ -374,9 +382,12 @@ public class epc extends javax.swing.JFrame {
     private void exportItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportItemActionPerformed
         if(resultArea.getText().length() >0) {
             JFileChooser chooser = new JFileChooser();
-            chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-            int retrival = chooser.showSaveDialog(null);
+            chooser.setCurrentDirectory(new File(prefs.get("PathExport",System.getProperty("user.home").toString()) ));
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel CSV", "csv");
+            chooser.setFileFilter(filter);
+            int retrival = chooser.showSaveDialog(this);
             if (retrival == JFileChooser.APPROVE_OPTION) {
+                prefs.put("PathExport", chooser.getCurrentDirectory().toString());
                 try {
                     FileWriter fw;
                     if(chooser.getSelectedFile().toString().endsWith(".csv")) {

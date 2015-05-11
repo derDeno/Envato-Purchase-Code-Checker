@@ -6,6 +6,7 @@
 
 package com.pixelartdev;
 
+import java.awt.Toolkit;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -38,8 +39,8 @@ public class Help extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Help");
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("epcc-icon.png")));
         setMinimumSize(new java.awt.Dimension(835, 345));
-        setPreferredSize(new java.awt.Dimension(835, 345));
 
         SplitPane.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
 
