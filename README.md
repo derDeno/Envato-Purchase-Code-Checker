@@ -13,7 +13,15 @@ Created by Pixelart 2015
 
 ## Changelog
 
-**Version 1.1.0** 10. May 2015
+**Version 1.1.3**  *11. May 2015*
 ```
-- Initial release`
+- Save to File and Open from File option
+- Improvements & bug fixes
+- Windows exe now available
+- Added Icon for the software
+```
+
+**Version 1.1.0**  *10. May 2015*
+```
+- Initial release
 ```
