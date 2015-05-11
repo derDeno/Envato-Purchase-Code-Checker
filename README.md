@@ -1,7 +1,6 @@
 # Envato Purchase Code Checker
-![alt text][logo]
 
-This is a purchase code checker for the Envato market. You are able to check multiple purchasecodes at once, and save the result to csv, or saveing and opening a file with the purchase codes to check.
+![alt text][logo] This is a purchase code checker for the Envato market. You are able to check multiple purchasecodes at once, and save the result to csv, or saveing and opening a file with the purchase codes to check.
 
 ## How to use
 1. Just enter your Username and ApiKey in the corresponding fields, and press save.
