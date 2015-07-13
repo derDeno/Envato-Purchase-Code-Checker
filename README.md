@@ -1,4 +1,4 @@
-# Envato Purchase Code Checker
+# Envato Purchase Code Checker [![Total Downloads](https://poser.pugx.org/PixelartDev/Envato-Purchase-Code-Checker/downloads)](https://packagist.org/packages/PixelartDev/Envato-Purchase-Code-Checker)
 
 This is a purchase code checker for the Envato market. You are able to check multiple purchasecodes at once, and save the result to csv, or saveing and opening a file with the purchase codes to check.
 
